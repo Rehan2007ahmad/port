@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Navbar + Gallery</title>
+  <style>
+    /* General Reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Arial', sans-serif;
+      overflow-x: hidden;
+      background-color: #000;
+      color: #fff;
+    }
+
+    /* Navbar Styles */
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      padding: 1rem 2rem;
+      background: linear-gradient(90deg, #000, #222);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 1000;
+      transform: translateY(-100%);
+      animation: slideDown 1s ease-in-out forwards;
+    }
+
+    .navbar .logo {
+      color: #fff;
+      font-size: 1.8rem;
+      font-weight: bold;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+
+    .navbar .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .navbar .nav-links a {
+      color: #fff;
+      text-decoration: none;
+      font-size: 1rem;
+      position: relative;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      transition: color 0.3s ease-in-out;
+    }
+
+    .navbar .nav-links a:hover {
+      color: #f7c708; /* Gold color */
+    }
+
+    .navbar .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background-color: #f7c708;
+      transition: width 0.3s ease-in-out;
+    }
+
+    .navbar .nav-links a:hover::after {
+      width: 100%;
+    }
+
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+    }
+
+    .hamburger div {
+      width: 25px;
+      height: 3px;
+      background-color: #fff;
+      transition: all 0.3s ease-in-out;
+    }
+
+    @media (max-width: 768px) {
+      .nav-links {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background: #000;
+        flex-direction: column;
+        align-items: center;
+        gap: 1.5rem;
+        padding: 1rem 0;
+        transition: transform 0.3s ease-in-out;
+        transform: translateY(-200%);
+      }
+
+      .nav-links.active {
+        display: flex;
+        transform: translateY(0);
+      }
+
+      .hamburger {
+        display: flex;
+      }
+    }
+
+    @keyframes slideDown {
+      from {
+        transform: translateY(-100%);
+      }
+      to {
+        transform: translateY(0);
+      }
+    }
+
+    /* Gallery Section */
+    .gallery-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1rem;
+      padding: 6rem 2rem 2rem; /* Adjusted for navbar space */
+      background: #000;
+    }
+
+    .gallery-item {
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+    }
+
+    .gallery-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+
+    .gallery-item:hover img {
+      transform: scale(1.1);
+    }
+
+    .item-overlay {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      top: 0;
+      background: rgba(0, 0, 0, 0.6);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      transform: translateY(100%);
+      transition: transform 0.5s ease;
+    }
+
+    .gallery-item:hover .item-overlay {
+      transform: translateY(0);
+    }
+
+    .item-overlay h3 {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+      color: #f7c708; /* Gold color */
+    }
+
+    .item-overlay p {
+      font-size: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .item-overlay a {
+      color: #fff;
+      text-decoration: none;
+      font-weight: bold;
+      border: 1px solid #f7c708;
+      padding: 0.5rem 1rem;
+      transition: all 0.3s ease;
+    }
+
+    .item-overlay a:hover {
+      background: #f7c708;
+      color: #000;
+    }
+    
+    
+    
+     /* Newsletter Section */
+    .newsletter {
+      padding: 4rem 2rem;
+      text-align: center;
+      background-color: #111;
+      color: #fff;
+    }
+
+    .newsletter h2 {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+    }
+
+    .newsletter p {
+      font-size: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .newsletter input[type="email"] {
+      padding: 1rem;
+      font-size: 1rem;
+      border: 2px solid #444;
+      border-radius: 25px;
+      width: 50%;
+      background: #000;
+      color: #fff;
+      outline: none;
+      transition: border-color 0.3s ease;
+    }
+
+    .newsletter input[type="email"]::placeholder {
+      color: #555;
+    }
+
+    .newsletter input[type="email"]:focus {
+      border-color: #f7c708;
+    }
+
+    .newsletter button {
+      margin-top: 1rem;
+      padding: 0.8rem 2rem;
+      font-size: 1rem;
+      border: none;
+      background-color: #f7c708;
+      color: #000;
+      border-radius: 25px;
+      cursor: pointer;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+
+    .newsletter button:hover {
+      background-color: #ffa500;
+      transform: scale(1.05);
+    }
+
+    .newsletter .privacy {
+      margin-top: 1rem;
+      font-size: 0.9rem;
+    }
+
+    .newsletter .privacy a {
+      color: #f7c708;
+      text-decoration: none;
+    }
+
+    .newsletter .privacy a:hover {
+      text-decoration: underline;
+    }
+    
+    
+    
+    
+
+
+    
+    
+  </style>
+  
+
+
+  <style>
+    /* Blog Section Styles */
+    .blog-section {
+      padding: 4rem 2rem;
+      background-color: #000;
+      color: #fff;
+      text-align: center;
+    }
+    
+    .blog-section h2 {
+      margin-bottom: 1.5rem;
+      font-size: 1.8rem;
+      font-weight: bold;
+    }
+    
+    /* .category-buttons {
+      margin-bottom: 2rem;
+    } */
+
+          .category-buttons {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 1rem; /* Increased gap */
+        margin-bottom: 2rem;
+      }
+    
+      .category-buttons button {
+  padding: 0.5rem 1rem;
+  border: none;
+  background: #222;
+  color: #fff;
+  font-size: 1rem;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+    .category-buttons button.active,
+    .category-buttons button:hover {
+      background: #f7c708;
+      color: #000;
+    }
+    
+    .blog-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+    }
+    
+    .blog-card {
+      background: #111;
+      border-radius: 10px;
+      overflow: hidden;
+      transition: transform 0.3s ease;
+    }
+    
+    .blog-card:hover {
+      transform: scale(1.02);
+    }
+    
+    .blog-image img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+    
+    .blog-image:hover img {
+      transform: scale(1.1);
+    }
+    
+    .blog-content {
+      padding: 1rem;
+      text-align: left;
+    }
+    
+    .blog-title {
+      display: block;
+      font-size: 1.2rem;
+      font-weight: bold;
+      color: #fff;
+      text-decoration: none;
+      margin-bottom: 0.5rem;
+      position: relative;
+      transition: color 0.3s ease;
+    }
+    
+    .blog-title:hover {
+      color: #f7c708;
+    }
+    
+    .blog-title:hover::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background-color: #f7c708;
+    }
+    
+    .blog-content p {
+      font-size: 0.9rem;
+      margin-bottom: 1rem;
+    }
+    
+    .blog-meta {
+      font-size: 0.8rem;
+      color: #aaa;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .blog-category {
+      padding: 0.2rem 0.5rem;
+      background: #f7c708;
+      color: #000;
+      border-radius: 15px;
+      font-size: 0.8rem;
+    }
+
+    @media (max-width: 768px) {
+    .category-buttons {
+      gap: 1rem; /* Increased gap for small devices */
+     }
+    }
+    </style>
+    
+</head>
+<body>
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="logo">Rehan</div>
+    <div class="hamburger" onclick="toggleMenu()">
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+    <ul class="nav-links">
+      <li><a href="#home">Home</a></li>
+      <li><a href="#career">Career</a></li>
+      <li><a href="#gallery">Gallery</a></li>
+      <li><a href="#news">News</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- Gallery Section -->
+  <section class="gallery-container">
+    <div class="gallery-item">
+      <img src="https://via.placeholder.com/400x600" alt="Item 1">
+      <div class="item-overlay">
+        <h3>URSU WATER</h3>
+        <p>URSUS is much more than water... It is an inspiration to drink health and a lifestyle.</p>
+        <a href="#view-more">View More →</a>
+      </div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://via.placeholder.com/400x600" alt="Item 2">
+      <div class="item-overlay">
+        <h3>Training Gear</h3>
+        <p>Discover the ultimate training essentials to enhance your performance.</p>
+        <a href="#view-more">View More →</a>
+      </div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://via.placeholder.com/400x600" alt="Item 3">
+      <div class="item-overlay">
+        <h3>Z Series</h3>
+        <p>Unleash your bold side with the new Z fragrance collection.</p>
+        <a href="#view-more">View More →</a>
+      </div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://via.placeholder.com/400x600" alt="Item 4">
+      <div class="item-overlay">
+        <h3>Private Jet</h3>
+        <p>Experience the epitome of luxury with a private jet lifestyle.</p>
+        <a href="#view-more">View More →</a>
+      </div>
+    </div>
+  </section>
+  
+  
+  
+
+
+<!-- Blog Section -->
+<section class="blog-section">
+  <h2>Blogs</h2>
+  <h2>Select a category to see more related content</h2>
+  <div class="category-buttons">
+    <button class="active">All (20)</button>
+    <button>Technology (03)</button>
+    <button>Lifestyle (02)</button>
+    <button>Travel (05)</button>
+    <button>Health (09)</button>
+    <button>Culture (01)</button>
+  </div>
+  <div class="blog-cards">
+    <!-- Blog Card 1 -->
+    <div class="blog-card">
+      <a href="#post1" class="blog-image">
+        <img src="https://via.placeholder.com/400x300" alt="Post 1">
+      </a>
+      <div class="blog-content">
+        <a href="#post1" class="blog-title">Stylish Kitchen And Dining Room With Functional Ideas</a>
+        <p>Lorem Ipsum is simply dummy text of the print and typesetting industry...</p>
+        <div class="blog-meta">
+          <span>Adrio Devid • Sep 10, 2025</span>
+          <span class="blog-category">Technology</span>
+        </div>
+      </div>
+    </div>
+    <!-- Blog Card 2 -->
+    <div class="blog-card">
+      <a href="#post2" class="blog-image">
+        <img src="https://via.placeholder.com/400x300" alt="Post 2">
+      </a>
+      <div class="blog-content">
+        <a href="#post2" class="blog-title">Enhancing Productivity with Modern Office Setup</a>
+        <p>Lorem Ipsum is simply dummy text of the print and typesetting industry...</p>
+        <div class="blog-meta">
+          <span>Adrio Devid • Sep 12, 2025</span>
+          <span class="blog-category">Lifestyle</span>
+        </div>
+      </div>
+    </div>
+    <!-- Blog Card 3 -->
+    <div class="blog-card">
+      <a href="#post3" class="blog-image">
+        <img src="https://via.placeholder.com/400x300" alt="Post 3">
+      </a>
+      <div class="blog-content">
+        <a href="#post3" class="blog-title">Exploring Minimalist Home Décor Ideas</a>
+        <p>Lorem Ipsum is simply dummy text of the print and typesetting industry...</p>
+        <div class="blog-meta">
+          <span>Adrio Devid • Sep 14, 2025</span>
+          <span class="blog-category">Travel</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+  
+  
+  <!-- Newsletter Section -->
+  <section class="newsletter">
+    <h2>STAY TUNED</h2>
+    <p>
+      Subscribe to my newsletter and don't miss any updates on new products,
+      promotions, or career events.
+    </p>
+    <form action="#">
+      <input type="email" placeholder="yourname@email.com" required>
+      <br>
+      <button type="submit">SUBSCRIBE TO NEWSLETTER</button>
+    </form>
+    <div class="privacy">
+      <input type="checkbox" required> I read and accept the
+      <a href="#">privacy policy</a>.
+    </div>
+  </section>
+
+
+  <!-- JavaScript -->
+  <script>
+    const hamburger = document.querySelector('.hamburger');
+    const navLinks = document.querySelector('.nav-links');
+
+    function toggleMenu() {
+      navLinks.classList.toggle('active');
+    }
+  </script>
+</body>
+</html>
